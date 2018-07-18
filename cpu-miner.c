@@ -642,7 +642,7 @@ static bool gbt_work_decode(const json_t *val, struct work *work)
 	if (genesis) {
 		for (i = 0; i < 6; i++)
 			work->target[i] = 0xffffffff;
-		work->target[6] = 0xffffffff;
+		work->target[6] = 0x00ffffff;
 		work->target[7] = 0x00000000;
 	}
 
