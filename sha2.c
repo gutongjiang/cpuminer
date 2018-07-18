@@ -571,6 +571,13 @@ static inline int scanhash_sha256d_8way(int thr_id, uint32_t *pdata,
 				sha256d_80_swap(hash, pdata);
 				if (fulltest(hash, ptarget)) {
 					*hashes_done = n - first_nonce + 1;
+
+					printf("====================    genesis    ====================\n");
+					printf("genesis hash: ");
+					for (int i = 7; i > -1; --i) 
+						printf("%08lx", hash[i]);
+					printf("\n");
+
 					return 1;
 				}
 			}

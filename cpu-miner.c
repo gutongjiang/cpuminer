@@ -110,6 +110,7 @@ static const char *algo_names[] = {
 	[ALGO_SHA256D]		= "sha256d",
 };
 
+bool genesis = false;
 bool opt_debug = false;
 bool opt_protocol = false;
 static bool opt_benchmark = false;
@@ -168,6 +169,7 @@ struct option {
 static char const usage[] = "\
 Usage: " PROGRAM_NAME " [OPTIONS]\n\
 Options:\n\
+  -g, --genesis         calculate genesis\n\
   -a, --algo=ALGO       specify the algorithm to use\n\
                           scrypt    scrypt(1024, 1, 1) (default)\n\
                           scrypt:N  scrypt(N, 1, 1)\n\
@@ -252,6 +254,7 @@ static struct option const options[] = {
 	{ "user", 1, NULL, 'u' },
 	{ "userpass", 1, NULL, 'O' },
 	{ "version", 0, NULL, 'V' },
+	{ "genesis", 0, NULL, 'g' },
 	{ 0, 0, 0, 0 }
 };
 
@@ -415,6 +418,12 @@ static bool gbt_work_decode(const json_t *val, struct work *work)
 	if (unlikely(!jobj_binary(val, "bits", &bits, sizeof(bits)))) {
 		applog(LOG_ERR, "JSON invalid bits");
 		goto out;
+	}
+
+	if (genesis) {
+		memset(prevhash, 0, sizeof(prevhash));
+		work->height = 0;
+		version = 1;
 	}
 
 	/* find count and size of transactions */
@@ -630,6 +639,13 @@ static bool gbt_work_decode(const json_t *val, struct work *work)
 	for (i = 0; i < ARRAY_SIZE(work->target); i++)
 		work->target[7 - i] = be32dec(target + i);
 
+	if (genesis) {
+		for (i = 0; i < 6; i++)
+			work->target[i] = 0xffffffff;
+		work->target[6] = 0xffffffff;
+		work->target[7] = 0x00000000;
+	}
+
 	tmp = json_object_get(val, "workid");
 	if (tmp) {
 		if (!json_is_string(tmp)) {
@@ -746,7 +762,51 @@ static bool submit_upstream_work(CURL *curl, struct work *work)
 				data_str, work->txs);
 		}
 		val = json_rpc_call(curl, rpc_url, rpc_userpass, req, NULL, 0);
+
 		free(req);
+
+		if (genesis)
+		{
+			printf("preblockhash: ");
+			for (int i = 8; i > 0; i--) {
+				uint32_t temp;
+				le32enc(&temp, work->data[i]);
+				printf("%08lx", temp);
+			}    
+			printf("\n");
+
+			printf("merkleroot: ");
+			for (int i = 8; i > 0; i--) {
+				uint32_t temp;
+				le32enc(&temp, work->data[i + 8]); 
+				printf("%08lx", temp);
+			}    
+			printf("\n");
+	     
+			printf("traget: ");
+			for (int i = 7; i > -1; i--) {
+				printf("%08lx", work->target[i]);
+			}    
+			printf("\n");
+
+			uint32_t version, time, nbits, nonce;
+			le32enc(&version, work->data[0]);
+			le32enc(&time, work->data[17]);
+			le32enc(&nbits, work->data[18]);
+			le32enc(&nonce, work->data[19]);
+
+			printf("versionHex: %lx\n", version);
+			printf("version: %ld\n", version);
+			printf("timeHex: %lx\n", time);
+			printf("time: %ld\n", time);
+			printf("bits: %lx\n", nbits);
+			printf("nonceHex: %lx\n", nonce);
+			printf("nonce: %ld\n", nonce);
+
+			printf("====================    genesis    ====================\n");	        
+			exit(1);
+		}
+         
 		if (unlikely(!val)) {
 			applog(LOG_ERR, "submit_upstream_work json_rpc_call failed");
 			goto out;
@@ -1756,6 +1816,9 @@ static void parse_arg(int key, char *arg, char *pname)
 			show_usage_and_exit(1);
 		}
 		strcpy(coinbase_sig, arg);
+		break;
+	case 'g':
+		genesis = true;
 		break;
 	case 'S':
 		use_syslog = true;
