@@ -1,8 +1,8 @@
 # calculate genesis
 
-use '--g' & '--coinbase-sig' to calculate genesis
+use *--g* and *--coinbase-sig* to calculate genesis
 
-'--coinbase-sig' is required, because genesis block scriptsig must contain additional information 
+*--coinbase-sig* is required, because genesis block scriptsig must contain additional information 
 ```
 ./minerd -a sha256d -o http://127.0.0.1:8332/ -O cf:mymm --no-getwork --no-longpoll --no-stratum --coinbase-addr=1JNxEnQC3ofS8vaZqQXcRzV4KVveZAwAed --g --coinbase-sig="why so serious"
 ```
