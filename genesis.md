@@ -1,6 +1,7 @@
 # calculate genesis
 
 use '--g' & '--coinbase-sig' to calculate genesis
+
 '--coinbase-sig' is required, because genesis block scriptsig must contain additional information 
 ```
 ./minerd -a sha256d -o http://127.0.0.1:8332/ -O cf:mymm --no-getwork --no-longpoll --no-stratum --coinbase-addr=1JNxEnQC3ofS8vaZqQXcRzV4KVveZAwAed --g --coinbase-sig="why so serious"
@@ -19,4 +20,4 @@ nonce: 3941343488
 ====================    genesis    ====================
 ```
 
-then set the genesis params in [chainparams.cpp](file:///chainparams.cpp)
+then set the genesis params in [chainparams.cpp](./chainparams.cpp)
