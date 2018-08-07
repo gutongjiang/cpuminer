@@ -20,4 +20,4 @@ nonce: 3941343488
 ====================    genesis    ====================
 ```
 
-then set the genesis params in [chainparams.cpp](./chainparams.cpp#L26)
+then set the genesis params in [chainparams.cpp](./chainparams.cpp#L26) line 26,54,108,127

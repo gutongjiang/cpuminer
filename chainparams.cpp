@@ -50,7 +50,6 @@ static CBlock CreateGenesisBlock(const char* pszTimestamp, const CScript& genesi
  */
 static CBlock CreateGenesisBlock(uint32_t nTime, uint32_t nNonce, uint32_t nBits, int32_t nVersion, const CAmount& genesisReward)
 {
-	//const char* pszTimestamp = "The Times 03/Jan/2009 Chancellor on brink of second bailout for banks";
         // genesius
         const char* pszTimestamp = "why so serious";
         const CScript genesisOutputScript = CScript() << OP_DUP << OP_HASH160 << ParseHex("bea0fbcba8ad12b85f5f2a0fa5f8f129812d0726") << OP_EQUALVERIFY << OP_CHECKSIG;
@@ -105,7 +104,7 @@ public:
         consensus.vDeployments[Consensus::DEPLOYMENT_SEGWIT].nTimeout = 1510704000; // November 15th, 2017.
 
         // The best chain should have at least this much work.
-        //consensus.nMinimumChainWork = uint256S("0x000000000000000000000000000000000000000000723d3581fe1bd55373540a");
+        // consensus.nMinimumChainWork = uint256S("0x000000000000000000000000000000000000000000723d3581fe1bd55373540a");
 	consensus.nMinimumChainWork = uint256S("0x0000000000000000000000000000000000000000000000000000000000000000");
 
         // By default assume that the signatures in ancestors of this block are valid.
@@ -123,12 +122,10 @@ public:
         nDefaultPort = 9527;
         nPruneAfterHeight = 100000;
 
-        //genesis = CreateGenesisBlock(1231006505, 2083236893, 0x1d00ffff, 1, 50 * COIN);
+        // genesis = CreateGenesisBlock(1231006505, 2083236893, 0x1d00ffff, 1, 50 * COIN);
 	// genesis
         genesis = CreateGenesisBlock(1531964789, 3941343488, 0x1d00ffff, 1, 50 * COIN);
         consensus.hashGenesisBlock = genesis.GetHash();
-        //assert(consensus.hashGenesisBlock == uint256S("0x000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f"));
-        //assert(genesis.hashMerkleRoot == uint256S("0x4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b"));
         assert(consensus.hashGenesisBlock == uint256S("0x00000000009f46506b3ad70976c8c87aac52df40f3cda5a880f96bfbcce8a7c9"));
         assert(genesis.hashMerkleRoot == uint256S("0xce449ac92860bbec4532111d5d6608f04a72dba350ce6623b79d8a459b4cb4e9"));
 
@@ -141,7 +138,7 @@ public:
         base58Prefixes[EXT_PUBLIC_KEY] = {0x04, 0x88, 0xB2, 0x1E};
         base58Prefixes[EXT_SECRET_KEY] = {0x04, 0x88, 0xAD, 0xE4};
 
-        //vFixedSeeds = std::vector<SeedSpec6>(pnSeed6_main, pnSeed6_main + ARRAYLEN(pnSeed6_main));
+        // vFixedSeeds = std::vector<SeedSpec6>(pnSeed6_main, pnSeed6_main + ARRAYLEN(pnSeed6_main));
 
         fDefaultConsistencyChecks = false;
         fRequireStandard = true;
