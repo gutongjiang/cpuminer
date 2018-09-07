@@ -582,6 +582,11 @@ static bool gbt_work_decode(const json_t *val, struct work *work)
 	bin2hex(work->txs, txc_vi, n);
 	bin2hex(work->txs + 2*n, cbtx, cbtx_size);
 
+	// genesis
+	printf("txs: \n");
+	for (int i = 0; i < 2 * (n + cbtx_size + tx_size) + 1; i++) 
+		printf("%c", work->txs[i]);
+
 	/* generate merkle root */
 	merkle_tree = malloc(32 * ((1 + tx_count + 1) & ~1));
 	sha256d(merkle_tree[0], cbtx, cbtx_size);
@@ -644,6 +649,7 @@ static bool gbt_work_decode(const json_t *val, struct work *work)
 			work->target[i] = 0xffffffff;
 		work->target[6] = 0x00ffffff;
 		work->target[7] = 0x00000000;
+		work->data[18] = 0xffff001d;
 	}
 
 	tmp = json_object_get(val, "workid");
@@ -797,10 +803,8 @@ static bool submit_upstream_work(CURL *curl, struct work *work)
 
 			printf("versionHex: %lx\n", version);
 			printf("version: %ld\n", version);
-			printf("timeHex: %lx\n", time);
 			printf("time: %ld\n", time);
 			printf("bits: %lx\n", nbits);
-			printf("nonceHex: %lx\n", nonce);
 			printf("nonce: %ld\n", nonce);
 
 			printf("====================    genesis    ====================\n");	        
