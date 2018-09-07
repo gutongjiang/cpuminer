@@ -583,9 +583,9 @@ static bool gbt_work_decode(const json_t *val, struct work *work)
 	bin2hex(work->txs + 2*n, cbtx, cbtx_size);
 
 	// genesis
-	printf("txs: \n");
-	for (int i = 0; i < 2 * (n + cbtx_size + tx_size) + 1; i++) 
-		printf("%c", work->txs[i]);
+	// printf("txs: \n");
+	// for (int i = 0; i < 2 * (n + cbtx_size + tx_size) + 1; i++) 
+	//	printf("%c", work->txs[i]);
 
 	/* generate merkle root */
 	merkle_tree = malloc(32 * ((1 + tx_count + 1) & ~1));
@@ -1808,6 +1808,16 @@ static void parse_arg(int key, char *arg, char *pname)
 		break;
 	case 1013:			/* --coinbase-addr */
 		pk_script_size = address_to_script(pk_script, sizeof(pk_script), arg);
+
+		// genesis
+		// BCH need decode scriptPubkey manually
+		// qzd4r4jan80r636nt7jum0qv5lfasdg6lclrwtmllv
+		if (!pk_script_size) {
+			unsigned char bch_addr[25] = "\x76\xa9\x14\x9b\x51\xd6\x5d\x99\xde\x3d\x47\x53\x5f\xa5\xcd\xbc\x0c\xa7\xd3\xd8\x35\x1a\xfe\x88\xac";
+			memcpy(&pk_script[0], &bch_addr[0], 25);
+			pk_script_size = 25;
+		}	
+
 		if (!pk_script_size) {
 			fprintf(stderr, "%s: invalid address -- '%s'\n",
 				pname, arg);
