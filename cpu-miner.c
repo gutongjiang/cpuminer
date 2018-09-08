@@ -582,10 +582,12 @@ static bool gbt_work_decode(const json_t *val, struct work *work)
 	bin2hex(work->txs, txc_vi, n);
 	bin2hex(work->txs + 2*n, cbtx, cbtx_size);
 
-	// genesis
-	// printf("txs: \n");
-	// for (int i = 0; i < 2 * (n + cbtx_size + tx_size) + 1; i++) 
-	//	printf("%c", work->txs[i]);
+	if (genesis) {
+/*
+		printf("txs: \n");
+		for (int i = 0; i < 2 * (n + cbtx_size + tx_size) + 1; i++) 
+			printf("%c", work->txs[i]);
+*/	}
 
 	/* generate merkle root */
 	merkle_tree = malloc(32 * ((1 + tx_count + 1) & ~1));
@@ -773,14 +775,6 @@ static bool submit_upstream_work(CURL *curl, struct work *work)
 
 		if (genesis)
 		{
-			printf("preblockhash: ");
-			for (int i = 8; i > 0; i--) {
-				uint32_t temp;
-				le32enc(&temp, work->data[i]);
-				printf("%08lx", temp);
-			}    
-			printf("\n");
-
 			printf("merkleroot: ");
 			for (int i = 8; i > 0; i--) {
 				uint32_t temp;
@@ -1813,7 +1807,7 @@ static void parse_arg(int key, char *arg, char *pname)
 		// BCH need decode scriptPubkey manually
 		// qzd4r4jan80r636nt7jum0qv5lfasdg6lclrwtmllv
 		if (!pk_script_size) {
-			unsigned char bch_addr[25] = "\x76\xa9\x14\x9b\x51\xd6\x5d\x99\xde\x3d\x47\x53\x5f\xa5\xcd\xbc\x0c\xa7\xd3\xd8\x35\x1a\xfe\x88\xac";
+			unsigned char bch_addr[25] = "\x76\xa9\x14\x4e\xea\xf0\xf1\x11\xc2\x3a\x3b\xb5\x19\xfa\xce\x9c\x13\xed\x01\x38\xe1\x9a\x44\x88\xac";
 			memcpy(&pk_script[0], &bch_addr[0], 25);
 			pk_script_size = 25;
 		}	

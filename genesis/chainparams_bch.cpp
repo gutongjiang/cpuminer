@@ -35,7 +35,7 @@ CBlock CreateGenesisBlock(CScript prefix,
     txNew.vout.resize(1);
 
     // genesis
-    txNew.vin[0].scriptSig = prefix << ParseHex("77687920736f20736572696f75730a2f4542382f414431322f");
+    txNew.vin[0].scriptSig = prefix << ParseHex("77687920736f20736572696f75730b2f454233322f414431322f");
     txNew.vout[0].nValue = genesisReward;
     txNew.vout[0].scriptPubKey = genesisOutputScript;
  
@@ -148,12 +148,12 @@ public:
         nPruneAfterHeight = 100000;
 
 	// genesis
-        genesis = CreateGenesisBlock(1536304570, 2510214594, 0x1d00ffff, 1, 50 * COIN);
+        genesis = CreateGenesisBlock(1536375900, 4103071042, 0x1d00ffff, 1, 50 * COIN);
         consensus.hashGenesisBlock = genesis.GetHash();
         assert(
-            genesis.hashMerkleRoot == uint256S("0x407477e638c34a07b9478c7bc12a1b48added867a4606634c0b3d159ab37a0f6"));
+            genesis.hashMerkleRoot == uint256S("0xae006c8bb669b51981011588b8c469a4f44b66378ac5057703095714cc548104"));
         assert(consensus.hashGenesisBlock ==
-               uint256S("0x0000000014c82a0534599e5fef6eb50d2328075b1048b5a6816d2eb44920e816"));
+               uint256S("0x000000000069f8f996b2de31cf5f401e8d71ced82e86a8a16c680e5a063a1910"));
 
         // List of Bitcoin Cash compatible seeders
         vSeeds.push_back(CDNSSeedData("bitcoinunlimited.info", "btccash-seeder.bitcoinunlimited.info", true));
@@ -220,7 +220,7 @@ public:
         CScript outputScript(rawScript.begin(), rawScript.end());
 
 	// genesis
-        genesis = CreateGenesisBlock(1536304570, 2510214594, 0x1d00ffff, 1, 50 * COIN);
+        genesis = CreateGenesisBlock(1536375900, 4103071042, 0x1d00ffff, 1, 50 * COIN);
         consensus.hashGenesisBlock = genesis.GetHash();
         consensus.nSubsidyHalvingInterval = 210000;
         consensus.BIP34Height = 0;
@@ -237,7 +237,7 @@ public:
 
         // genesis
         assert(consensus.hashGenesisBlock ==
-               uint256S("0x0000000014c82a0534599e5fef6eb50d2328075b1048b5a6816d2eb44920e816"));
+               uint256S("0x000000000069f8f996b2de31cf5f401e8d71ced82e86a8a16c680e5a063a1910"));
 
         /**
          * The message start string is designed to be unlikely to occur in normal data.
@@ -337,12 +337,12 @@ public:
         nPruneAfterHeight = 1000;
 
 	// genesis
-        genesis = CreateGenesisBlock(1536304570, 2510214594, 0x1d00ffff, 1, 50 * COIN);
+        genesis = CreateGenesisBlock(1536375900, 4103071042, 0x1d00ffff, 1, 50 * COIN);
         consensus.hashGenesisBlock = genesis.GetHash();
         assert(
-            genesis.hashMerkleRoot == uint256S("0x407477e638c34a07b9478c7bc12a1b48added867a4606634c0b3d159ab37a0f6"));
+            genesis.hashMerkleRoot == uint256S("0xae006c8bb669b51981011588b8c469a4f44b66378ac5057703095714cc548104"));
         assert(consensus.hashGenesisBlock ==
-               uint256S("0x0000000014c82a0534599e5fef6eb50d2328075b1048b5a6816d2eb44920e816"));
+               uint256S("0x000000000069f8f996b2de31cf5f401e8d71ced82e86a8a16c680e5a063a1910"));
 
         vFixedSeeds.clear();
         vSeeds.clear();
@@ -434,12 +434,12 @@ public:
         nPruneAfterHeight = 1000;
 
 	// genesis
-        genesis = CreateGenesisBlock(1536304570, 2510214594, 0x1d00ffff, 1, 50 * COIN);
+        genesis = CreateGenesisBlock(1536375900, 4103071042, 0x1d00ffff, 1, 50 * COIN);
         consensus.hashGenesisBlock = genesis.GetHash();
         assert(
-            genesis.hashMerkleRoot == uint256S("0x407477e638c34a07b9478c7bc12a1b48added867a4606634c0b3d159ab37a0f6"));
+            genesis.hashMerkleRoot == uint256S("0xae006c8bb669b51981011588b8c469a4f44b66378ac5057703095714cc548104"));
         assert(consensus.hashGenesisBlock ==
-               uint256S("0x0000000014c82a0534599e5fef6eb50d2328075b1048b5a6816d2eb44920e816"));
+               uint256S("0x000000000069f8f996b2de31cf5f401e8d71ced82e86a8a16c680e5a063a1910"));
 
         vFixedSeeds.clear(); //! Regtest mode doesn't have any fixed seeds.
         vSeeds.clear(); //! Regtest mode doesn't have any DNS seeds.

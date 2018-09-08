@@ -20,5 +20,7 @@ nonce: 3941343488
 ====================    genesis    ====================
 ```
 
-then set the genesis params in BTC [chainparams.cpp](./chainparams_btc.cpp#L26) line 26,54,109,128
+then set the genesis params in BTC [chainparams.cpp](./chainparams_btc.cpp#L26) line 26,54,109,128,
+
 set the genesis params in BCH [chainparams.cpp](./chainparams_bch.cpp#L38) line 38,73,151,223,239,340,437
+
